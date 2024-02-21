@@ -19,11 +19,8 @@ function getById(id) {
 }
 
 async function insert(hobbit) {
-  return await db('hobbits')
-  .insert(hobbit)
-  .then(([id]) => {
-    return db('hobbits').where('id', id).first()
-  })
+  const [id] = await db('hobbits').insert(hobbit);
+  return db('hobbits').where({ id }).first();
 }
 
 async function update(id, changes) {
