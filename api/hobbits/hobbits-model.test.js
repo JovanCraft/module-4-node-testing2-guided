@@ -9,6 +9,7 @@ beforeAll(async () => {
 beforeEach(async () => {
     await db.seed.run()
 })
+
 test('environment is testing', () => {
     expect(process.env.NODE_ENV).toBe('testing')
 })
@@ -18,5 +19,21 @@ describe('getAll', () => {
         const result = await Hobbits.getAll()
         expect(result).toHaveLength(4)
         expect(result[0]).toMatchObject({ name: 'sam' })
+        expect(result[1]).toMatchObject({ name: 'frodo' })
+        expect(result[2]).toMatchObject({ name: 'pippin' })
+        expect(result[3]).toMatchObject({ name: 'merry' })
+    })
+})
+
+describe('getById', () => {
+    test('resolves the hobbit by the given id', async () => {
+        let result = await Hobbits.getById(1)
+        expect(result).toMatchObject({ name: 'sam' })
+        result = await Hobbits.getById(2)
+        expect(result).toMatchObject({ name: 'frodo' })
+        result = await Hobbits.getById(3)
+        expect(result).toMatchObject({ name: 'pippin' })
+        result = await Hobbits.getById(4)
+        expect(result).toMatchObject({ name: 'merry' })
     })
 })
